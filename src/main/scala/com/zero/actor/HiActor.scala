@@ -13,6 +13,5 @@ object HiActor {
         val replyFuture = actor1 !! "Hi"
         
         val replys = replyFuture()
-        
     }
 }

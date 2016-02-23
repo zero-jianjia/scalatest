@@ -1,8 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'scala'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 version = '1.0'
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart',
@@ -40,3 +42,23 @@ uploadArchives {
        }
     }
 }
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala', 'src/main/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+
+    test {
+        scala {
+            srcDirs = ['src/test/scala', 'src/test/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+ }
