@@ -4,7 +4,7 @@ import scala.collection.mutable.Set
 import scala.collection.mutable.HashSet
 import scala.collection.mutable.Map
 
-object SetTest {
+object SetTest_1 {
     def main(args: Array[String]): Unit = {
         //        test1()
         //        test2()
