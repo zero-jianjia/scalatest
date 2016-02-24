@@ -1,0 +1,39 @@
+option java_package = "com.zero.proto";
+
+
+/************索引检索请求**************/
+message IndexRequest {
+    repeated SearchReq search = 1 ;
+}
+
+/************索引检索回复**************/
+message IndexResponse {
+    repeated SearchResp result = 1 ;
+}
+
+
+/************投放单的检索请求***********/
+message SearchReq {
+    required string adunitId = 1;
+    repeated Target targets = 2 ; //各个维度定向
+
+}
+//定向内容
+message Target {
+    required string type = 1;
+    required string value = 2;
+}
+/*************************************/
+
+/***********投放单的检索结果***********/
+message SearchResp {
+    required string adunitId = 1;
+    repeated LineitemResp lineitems = 2 ;
+}
+
+message LineitemResp {
+    required string lineitemId = 1;
+    required string directional = 2;
+    required string adIds = 3;
+}
+/*************************************/

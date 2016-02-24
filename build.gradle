@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -62,3 +64,9 @@ sourceSets {
         }
     }
  }
+
+task "mkdirs" << {
+    sourceSets*.scala.srcDirs*.each { it.mkdirs() }
+    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}

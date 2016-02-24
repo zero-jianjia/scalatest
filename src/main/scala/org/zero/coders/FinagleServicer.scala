@@ -1,11 +1,11 @@
 package org.zero.coders
 
 import com.google.protobuf.Message
+import com.twitter.conversions.time._
 import com.twitter.finagle.Service
 import com.twitter.finagle.builder.ServerBuilder
 import com.twitter.finagle.util.InetSocketAddressUtil
-import com.twitter.util.{Future, Await}
-import com.twitter.conversions.time._
+import com.twitter.util.{Await, Future}
 import com.zero.proto.IndexSearchData.IndexRequest
 import com.zero.proto.PersonData.Person
 

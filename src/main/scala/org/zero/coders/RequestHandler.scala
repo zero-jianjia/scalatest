@@ -2,7 +2,6 @@ package org.zero.coders
 
 import com.google.protobuf.Message
 import com.twitter.util.Future
-import com.zero.proto.IndexSearchData
 import com.zero.proto.IndexSearchData.IndexRequest
 import com.zero.proto.PersonData.Person
 

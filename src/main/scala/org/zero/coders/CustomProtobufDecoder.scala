@@ -1,11 +1,8 @@
 package org.zero.coders
 
-import com.google.protobuf.Message
-import com.zero.proto.IndexSearchData
-import org.jboss.netty.buffer.{ChannelBufferInputStream, ChannelBuffer}
+import org.jboss.netty.buffer.{ChannelBuffer, ChannelBufferInputStream}
 import org.jboss.netty.channel.{Channel, ChannelHandlerContext}
 import org.jboss.netty.handler.codec.frame.FrameDecoder
-import org.jboss.netty.handler.codec.protobuf.ProtobufDecoder
 
 /**
   * 解码器
