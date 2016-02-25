@@ -36,6 +36,12 @@ dependencies {
 
     //thrift
     compile 'org.apache.thrift:libthrift:0.9.3'
+
+    compile 'net.jpountz.lz4:lz4:1.3.0'
+
+    compile 'org.xerial.snappy:snappy-java:1.1.2'
+
+
 }
 
 test {
