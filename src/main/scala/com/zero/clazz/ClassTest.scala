@@ -1,7 +1,6 @@
 package com.zero.clazz
 
 class Person private (val name: String, val age: Int) {
-
 }
 
 object Person {
