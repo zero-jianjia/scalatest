@@ -5,16 +5,16 @@ import java.util.concurrent.Executors
 import com.google.protobuf.Message
 import com.twitter.app.GlobalFlag
 import com.twitter.concurrent.NamedPoolThreadFactory
-import com.twitter.finagle.builder.ServerBuilder
-import com.twitter.finagle.util.{InetSocketAddressUtil, DefaultTimer}
-import com.twitter.finagle.{Service, Codec, CodecFactory}
-import com.twitter.jvm.numProcs
-import com.twitter.util.{Future, Await}
-import com.zero.proto.PersonData.Person
-import org.jboss.netty.channel.socket.nio.{NioServerSocketChannelFactory, NioClientSocketChannelFactory, NioWorkerPool}
-import org.jboss.netty.channel.{ServerChannelFactory, Channels, ChannelPipelineFactory}
-import org.zero.finagle.SaxParam._
 import com.twitter.conversions.time._
+import com.twitter.finagle.builder.ServerBuilder
+import com.twitter.finagle.util.InetSocketAddressUtil
+import com.twitter.finagle.{Codec, CodecFactory, Service}
+import com.twitter.jvm.numProcs
+import com.twitter.util.{Await, Future}
+import com.zero.proto.PersonData.Person
+import org.jboss.netty.channel.socket.nio.{NioClientSocketChannelFactory, NioServerSocketChannelFactory, NioWorkerPool}
+import org.jboss.netty.channel.{ChannelFactory => NettyChannelFactory, ChannelPipelineFactory, Channels, ServerChannelFactory}
+
 
 /**
   * Created by jianjia1 on 2016/2/17.
@@ -24,14 +24,14 @@ object DSPIndexService {
         //Config.localIp + ":" + Config.getPort(SAX_BrandAndPd)
         val Seq(ia) = InetSocketAddressUtil.parseHosts("127.0.0.1:8845")
         val server = ServerBuilder()
-                .codec(new DSPCodec())
-                .hostConnectionMaxLifeTime(5.minutes)
-                .name("zero")
-                .keepAlive(true)
-//                .channelFactory(SaxParam.serverchannelFactory)
+            .codec(new DSPCodec())
+            .hostConnectionMaxLifeTime(5.minutes)
+            .name("zero")
+            .keepAlive(true)
+            .channelFactory(SaxParam.serverchannelFactory)
 
-                .bindTo(ia)
-                .build(new EngineService)
+            .bindTo(ia)
+            .build(new EngineService)
         Await.result(server)
     }
 }
@@ -44,10 +44,9 @@ object SaxParam {
 
     object WorkerPool extends NioWorkerPool(Executor, numWorkers())
 
-//    val channelFactory: NettyChannelFactory = new NioClientSocketChannelFactory(
-//        Executor, 1 /*# boss threads*/ , WorkerPool, DefaultTimer) {
-//        override def releaseExternalResources() = () // no-op; unreleasable
-//    }
+    val channelFactory = new NioClientSocketChannelFactory(Executor, 1, WorkerPool) {
+        override def releaseExternalResources() = () // no-op; unreleasable
+    }
 
     val serverchannelFactory: ServerChannelFactory =
         new NioServerSocketChannelFactory(Executor, WorkerPool) {
