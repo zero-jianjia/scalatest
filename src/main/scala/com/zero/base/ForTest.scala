@@ -1,7 +1,6 @@
 package com.zero.base
 
 /**
-  * Created by jianjia1 on 2016/1/29.
   */
 object ForTest {
     def main(args: Array[String]) {
