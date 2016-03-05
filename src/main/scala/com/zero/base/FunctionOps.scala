@@ -1,8 +1,5 @@
 package com.zero.base
 
-/**
-  * Created by jianjia1 on 2016/1/29.
-  */
 object FunctionOps {
     def main(args: Array[String]) {
         var increase = (x: Int) => x + 1
@@ -23,4 +20,30 @@ object FunctionOps {
         val f = (_: Int) + (_: Int)
         println(f(5, 10))
     }
+
+    //默认参数和带名参数
+    def test(): Unit = {
+        def decorate(str: String, left: String = "[", right: String = "]") = {
+            left + str + right
+        }
+
+        decorate("zero") //---> [zero]
+        decorate("zero", "{") //--->{zero]
+        decorate("zero", right = "}") //--->[zero}
+    }
+
+
+    //变长参数
+    def test1: Unit = {
+        def sum(args: Int*) = {
+            var result = 0
+            for (arg <- args) result += arg
+            result
+        }
+        sum(1, 2, 3) //--->6
+
+        //sum(1 to 5),错误
+        sum(1 to 5: _*) // _*用来转换为参数序列
+    }
+
 }
