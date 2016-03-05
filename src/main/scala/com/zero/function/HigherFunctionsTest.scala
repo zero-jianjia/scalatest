@@ -2,9 +2,6 @@ package com.zero.function
 
 import scala.math._
 
-/**
-  * Created by jianjia1 on 2016/1/29.
-  */
 object HigherFunctionsTest {
     def main(args: Array[String]) {
         (1 to 3).map("*" * _).foreach(println _)

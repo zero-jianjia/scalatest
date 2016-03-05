@@ -1,8 +1,5 @@
 package com.zero.function
 
-/**
-  * Created by jianjia1 on 2016/1/29.
-  */
 object ClosureTest {
     def main(args: Array[String]) {
         val data = List(1, 2, 3, 4, 5, 6)
