@@ -3,7 +3,7 @@ package org.zero.twitter_future
 import java.util.concurrent.{Executors, TimeUnit}
 
 import com.twitter.util.Future._
-import com.twitter.util.{Await, ExecutorServiceFuturePool, Future, FuturePool}
+import com.twitter.util._
 
 /**
   * Created by Inuyasha on 03.03.
@@ -18,21 +18,24 @@ object FutureTest {
 
     //抛出异常并被捕获
     def test4: Unit = {
-        val result = Future.join(getFuture1, fail("a", "b")).flatMap {
+        println("----------")
+        val result = Future.join(getFuture1, getFuture2 /*fail("a", "b")*/).flatMap {
             case (result1, result2) => combine(result1, result2)
-        }.ensure {
+        }.within(new JavaTimer(true, Option.apply("timer")), Duration.fromSeconds(3)) //超时等待
+         .ensure {
             //Ensure is executed both in case of succes or failure.
             println("---ensure----")
         }.rescue {
             //Only execute when exception occurred
             case e: Exception => {
-                println(e.getMessage)
+                println(e.getMessage + " " + e.getClass)//3.seconds class com.twitter.util.TimeoutException
                 Future.False
             }
-        }
+        } /*.delayed(Duration.fromSeconds(7))(new JavaTimer(true, Option.apply("timer")))*/
+        //延迟多长时间运行
         println("await")
         println(Await.result(result))
-
+        println("overoverover")
 
     }
 
@@ -134,7 +137,7 @@ object FutureTest {
             //使用的是自定义的pool
             println("begin future2")
             println("future2 --- " + Thread.currentThread().getName)
-            TimeUnit.SECONDS.sleep(3)
+            TimeUnit.SECONDS.sleep(5)
             println("future2 over.")
             "zero"
         })
