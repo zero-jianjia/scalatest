@@ -14,7 +14,15 @@ object FutureTest {
         //        test2
         //        test3
         //        test4
-        test5
+        //        test5
+        test6
+    }
+
+
+    def test6: Unit = {
+//        fail("", "")
+//        println(111111)
+        println(Await.result(fail("", "").within(new JavaTimer(true, Option.apply("timer")), Duration.fromMilliseconds(1))))
     }
 
     def test5: Unit = {
