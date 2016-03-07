@@ -13,7 +13,19 @@ object FutureTest {
         //        test1
         //        test2
         //        test3
-        test4
+        //        test4
+        test5
+    }
+
+    def test5: Unit = {
+        val f = getFuture3
+        println("---await---")
+        val a = Await.ready(f)
+        println("a = " + a) //a = Promise@1798286609(state=Done(Return(zero)))
+        println(Await.result(f)) //zero
+        println("--------111")
+        println(Await.all(getFuture2)) //等待future完成
+        println("--------222")
     }
 
     //抛出异常并被捕获
@@ -22,13 +34,13 @@ object FutureTest {
         val result = Future.join(getFuture1, getFuture2 /*fail("a", "b")*/).flatMap {
             case (result1, result2) => combine(result1, result2)
         }.within(new JavaTimer(true, Option.apply("timer")), Duration.fromSeconds(3)) //超时等待
-         .ensure {
+            .ensure {
             //Ensure is executed both in case of succes or failure.
             println("---ensure----")
         }.rescue {
             //Only execute when exception occurred
             case e: Exception => {
-                println(e.getMessage + " " + e.getClass)//3.seconds class com.twitter.util.TimeoutException
+                println(e.getMessage + " " + e.getClass) //3.seconds class com.twitter.util.TimeoutException
                 Future.False
             }
         } /*.delayed(Duration.fromSeconds(7))(new JavaTimer(true, Option.apply("timer")))*/
