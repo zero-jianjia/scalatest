@@ -6,6 +6,7 @@ package com.zero.pattern_match
 
 abstract class Person
 
+//默认val
 case class Student(age: Int) extends Person
 
 case class Worker(age: Int, salary: Double) extends Person
@@ -24,6 +25,7 @@ object CaseClassMatchTest {
 
         val worker = Worker(29, 10000.1)
         println(worker) //Worker(29,10000.1)
+        println(worker.copy())//Worker(29,10000.1)
         val worker2 = worker.copy(salary = 19.95)
         println(worker2) //Worker(29,19.95)
         val worker3 = worker2.copy(age = 30)

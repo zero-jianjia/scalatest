@@ -1,6 +1,6 @@
 package com.zero.function
 
-object FunTest {
+object FuncTest {
     def main(args: Array[String]) {
         test1
         println()

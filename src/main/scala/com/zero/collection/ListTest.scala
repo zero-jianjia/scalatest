@@ -11,6 +11,7 @@ object ListTest {
         println(data.head)
         println(data.tail.head)
 
+        //右结合
         val bigData_Core = "Hadoop" :: ("Spark" :: Nil)
         val data_Int = 1 :: 2 :: 3 :: Nil
         printList(bigData_Core)
@@ -32,6 +33,20 @@ object ListTest {
         println(List(List('a', 'b'), List('c'), List('d', 'e')).flatten)
         println(List.concat(List(), List('b'), List('c')))
 
+
+        val shuffledData = List(6,3,5,6,2,9,1)
+        println(sortList(shuffledData))
+
+        def sortList(list : List[Int]): List[Int] = list match{
+            case List() => List()
+            case head :: tail  => compute (head, sortList(tail))
+        }
+
+        def compute(data : Int , dataSet : List[Int]) : List[Int] = dataSet match{
+            case List() => List(data)
+            case head :: tail  => if (data <= head) data :: dataSet
+                                  else  head :: compute(data, tail)
+        }
 
     }
 

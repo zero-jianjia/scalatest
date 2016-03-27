@@ -5,7 +5,6 @@ package com.zero.pattern_match
   */
 object Pattern_Match_More {
     def main(args: Array[String]) {
-
         def match_type(t: Any) = t match {
             case p: Int => println("It is Integer")
             case p: String => println("It is String, the content is : " + p)
@@ -18,15 +17,16 @@ object Pattern_Match_More {
         match_type(Map("Scala" -> "Spark"))
 
         def match_array(arr: Any) = arr match {
-            case Array(0) => println("Array:" + "0")
-            case Array(x, y) => println("Array:" + x + " " + y)
-            case Array(0, _*) => println("Array:" + "0 ...")
+            case Array(5) => println("Array: 5")
+            case Array(x, y) => println("Array: " + x + " " + y)
+            case Array(0, _*) => println("Array: " + "0 ...")
             case _ => println("something else")
         }
 
-        match_array(Array(0))
+        match_array(Array(5))
         match_array(Array(0, 1))
         match_array(Array(0, 1, 2, 3, 4, 5))
+        match_array(Array(2, 3, 4, 5))
 
 
         def match_list(lst: Any) = lst match {

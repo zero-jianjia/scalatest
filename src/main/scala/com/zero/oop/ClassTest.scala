@@ -1,4 +1,4 @@
-package com.zero.clazz
+package com.zero.oop
 
 class Person private(val name: String, val age: Int) {
 }

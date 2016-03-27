@@ -1,31 +1,48 @@
 package com.zero.base
 
-/**
-  */
+import java.util.Arrays
+
 object ForTest {
-    def main(args: Array[String]) {
-        for (i <- 1 to 2; j <- 1 to 2) print((100 * i + j) + ", ")
-        println//101, 102, 201, 202,
-        for (i <- 1 to 2; j <- 1 to 2 if i != j) print((100 * i + j) + "  ")
-        println//102  201
+    def main(args: Array[String]): Unit = {
+        //        test1()
+        //        test2()
+        //        test3()
+        test4()
+    }
 
-        def addA(x: Int) = x + 100
-        val add = (x: Int) => x + 200
-        println("The result from a function is : " + addA(2))
-        println("The result from a val is : " + add(2))
+    def test4() {
+        val c = Array(2, 4, 5)
+        val result = for (elem <- c) yield elem * 2
+        println(Arrays.toString(result)) //[4, 8, 10]
+    }
 
-        def fac(n: Int): Int = if (n <= 0) 1 else n * fac(n - 1)
-        println("The result from a fac is : " + fac(10))
-
-        def combine(content: String, left: String = "[", right: String = "]") = left + content + right
-        println("The result from a combine is : " + combine("I love Spark", " << "))
-
-        def connected(args: Int*) = {
-            var result = 0
-            for (arg <- args) result += arg
-            result
+    def test3() {
+        for (i <- 0 to 2; j <- 1 to 3 if i != j) {
+            print(i * 10 + j)
+            print(" ")
         }
-        println("The result from a connected is : " + connected(1, 2, 3, 4, 5, 6))
+        //1 2 3 12 13 21 23 
+    }
 
+    def test2() {
+        var arr = Array("001a", "001b", "002a")
+        for (a <- arr if !a.endsWith("b"); if a.startsWith("001")) {
+            print(a + " ")
+        }
+    }
+
+    def test1() {
+        var arr = Array("001a", "002b", "002a")
+        for (a <- arr) {
+            print(a + " ")
+        }
+        println()
+        for (i <- 0 to arr.length - 1) {
+            print(arr(i) + " ")
+        }
+        println()
+        for (i <- 0 until arr.length) {
+            print(arr(i) + " ")
+        }
     }
 }

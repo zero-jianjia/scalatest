@@ -1,5 +1,6 @@
 package com.zero.function
 
+//闭包
 object ClosureTest {
     def main(args: Array[String]) {
         val data = List(1, 2, 3, 4, 5, 6)

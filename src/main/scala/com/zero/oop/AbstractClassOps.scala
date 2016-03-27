@@ -5,6 +5,7 @@ package com.zero.oop
   */
 class AbstractClassOps {
     var id: Int = _
+    var age: Int = 12
 }
 
 abstract class SuperTeacher(val name: String) {

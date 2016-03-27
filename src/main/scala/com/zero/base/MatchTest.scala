@@ -1,4 +1,4 @@
-package com.zero.other
+package com.zero.base
 
 object MatchTest {
     def main(args: Array[String]): Unit = {

@@ -51,6 +51,7 @@ object ArrayTest {
         strArray(0) = "hello"
         strArray(1) = "zero"
         val strArray002 = Array("Hello", "zero")
+        strArray002(1) = "world"//可以修改值
         println(strArray.mkString(", ")) //hello, zero
         println(strArray002.mkString(" ")) //Hello zero
 

@@ -28,17 +28,7 @@ object EasyTest {
         }
 
         println()
-        def match_array(arr: Any) = arr match {
-            case Array(5) => println("Array: 5")
-            case Array(x, y) => println("Array: " + x + " " + y)
-            case Array(0, _*) => println("Array: " + "0 ...")
-            case _ => println("something else")
-        }
 
-        match_array(Array(5))
-        match_array(Array(0, 1))
-        match_array(Array(0, 1, 2, 3, 4, 5))
-        match_array(Array(2, 3, 4, 5))
 
         val pattern = "([0-9]+) ([a-z]+)".r
         "20150628 hadoop" match {
@@ -54,6 +44,5 @@ object EasyTest {
             case Some(score) => println(score)
             case None => println("No score")
         }
-
     }
 }

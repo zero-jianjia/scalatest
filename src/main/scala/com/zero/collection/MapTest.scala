@@ -7,9 +7,9 @@ import scala.collection.mutable
   */
 object MapTest {
     def main(args: Array[String]) {
-        //        test1()
-        //        test2()
-        test3()
+        test1()
+        //                test2()
+        //        test3()
     }
 
     //其它操作
@@ -61,8 +61,14 @@ object MapTest {
         println(value) //5
 
         //如果key不存在，这使用get会出异常，需要这样
-        val value1 = ages.get("Hadoop").getOrElse("-1")
+        val value1 = ages.getOrElse("Hadoop", "-1")
         println(value1) //-1
+
+        val value2 = ages.get("Hadoop") match {
+            case Some(v) => v
+            case None => -2
+        }
+        println(value2) //-2
     }
 
 }

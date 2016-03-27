@@ -7,7 +7,7 @@ import scala.io.Source
   */
 object FileTest {
     def main(args: Array[String]) {
-        val file = Source.fromFile("build.sbt")
+        val file = Source.fromFile("build.gradle")
         for (line <- file.getLines) {
             println(line)
         }
@@ -20,5 +20,6 @@ object FileTest {
         //        val writer = new PrintWriter(new File("scalaFile.txt" ))
         //        for (i <- 1 to 100) writer.println(i)
         //        writer.close()
+
     }
 }
