@@ -1,4 +1,4 @@
-package com.zero.traittest
+package com.zero.oop
 
 class B {
     override def toString = "class B"
