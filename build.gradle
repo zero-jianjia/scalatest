@@ -23,7 +23,10 @@ dependencies {
     compile "org.scala-lang:scala-compiler:2.11.7"
     compile "org.scala-lang:scala-reflect:2.11.7"
 
-	compile 'com.twitter:finagle-core_2.11:6.31.0'
+    compile 'com.typesafe.akka:akka-actor_2.11:2.4.3'
+
+
+    compile 'com.twitter:finagle-core_2.11:6.31.0'
 	compile 'com.twitter:finagle-http_2.11:6.31.0'
     compile 'com.twitter:finagle-mysql_2.11:6.31.0'
 
