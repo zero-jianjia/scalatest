@@ -15,8 +15,8 @@ object FutureTest {
         //        test4
         //        test5
         //        test6
-        test7
-//        test8
+//        test7
+        test8
     }
     
     def test8: Unit = {
@@ -29,39 +29,49 @@ object FutureTest {
             "zero"
         })
         
+        TimeUnit.SECONDS.sleep(1)
         val f2 = f1.flatMap(s => Future.value({
-            println("f2 -- " + Thread.currentThread().getName)//f2 -- pool-thread-a，复用f1的线程
+            println("f2 -- " + Thread.currentThread().getName)//不定！
             "zero"
         }))
         
-        val f3 = Future.value({
+        val f3 = Future.value({ //会等待结果产生
             println("f3 -- " + Thread.currentThread().getName)//f3 -- main,主线程
+            TimeUnit.SECONDS.sleep(3)
             "zero"
         })
+        println("----")
         
         val f4 = futurePool.apply({
+            TimeUnit.SECONDS.sleep(1)
             println("f4 -- " + Thread.currentThread().getName)//f4 -- pool-1-thread-2,池线程 
             "zero"
         })
         
         val f5 = Future.join(f1, f4).flatMap { case (a, b) => {
-            println("f5 -- " + Thread.currentThread().getName)//不定！main或池线程
+            println("f5 -- " + Thread.currentThread().getName)//不定！main或池线程，加上sleep后均是池线程，不知道为啥？下同
+            TimeUnit.SECONDS.sleep(3)
             Future.Nil
         }
         }
         
-        val f7= Future.join(f1, f4).flatMap { case (a, b) => Future.value {
-            println("f7 -- " + Thread.currentThread().getName)//不定！
+        val f7= Future.join(f1, f2).flatMap { case (a, b) => Future.value {
+            TimeUnit.SECONDS.sleep(1)
+            println("f7 -- " + Thread.currentThread().getName)//f7 -- main
         }
         }
-        val f6 = f1.join(f4).flatMap({
+        val f6 = f1.join(f5).flatMap({
             case (a, b) => {
-                println("f6 -- " + Thread.currentThread().getName)//不定！
+                println("f6 -- " + Thread.currentThread().getName)//f6 -- pool-1-thread-2
                 Future.Nil
             }
         })
-        Await.all(f1, f2, f3, f4, f5, f6)
         println("end")
+        Await.all(f1, f2, f3, f4, f5, f6)
+       
+        // 鉴于多种情况下的测试，发现这样的结论;
+        // 当主线程执行 a.join(b)、Future.join(a, b) 时，如果a或b已经运行完成，那么由主线程运行flatMap中代码，否则由a或b中的线程执行flatMap中代码
+        // 同样，对于 a.flatMap ,也是如此
     }
     
     def test7: Unit = {
