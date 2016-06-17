@@ -15,28 +15,53 @@ object FutureTest {
         //        test4
         //        test5
         //        test6
-//        test7
-        test8
+        test7
+//        test8
     }
     
     def test8: Unit = {
-        val executors = Executors.newFixedThreadPool(3)
+        val executors = Executors.newFixedThreadPool(5)
         val futurePool: ExecutorServiceFuturePool = FuturePool.apply(executors)
         
         val f1 = futurePool.apply({
-            println("1 -- " + Thread.currentThread().getName)//1 -- pool-1-thread-1
+            Thread.currentThread().setName("pool-thread-a")
+            println("f1 -- " + Thread.currentThread().getName)//f1 -- pool-thread-a,池线程
             "zero"
         })
         
         val f2 = f1.flatMap(s => Future.value({
-            println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
+            println("f2 -- " + Thread.currentThread().getName)//f2 -- pool-thread-a，复用f1的线程
             "zero"
         }))
         
         val f3 = Future.value({
-            println("3 -- " + Thread.currentThread().getName)//3 -- main
+            println("f3 -- " + Thread.currentThread().getName)//f3 -- main,主线程
             "zero"
         })
+        
+        val f4 = futurePool.apply({
+            println("f4 -- " + Thread.currentThread().getName)//f4 -- pool-1-thread-2,池线程 
+            "zero"
+        })
+        
+        val f5 = Future.join(f1, f4).flatMap { case (a, b) => {
+            println("f5 -- " + Thread.currentThread().getName)//不定！main或池线程
+            Future.Nil
+        }
+        }
+        
+        val f7= Future.join(f1, f4).flatMap { case (a, b) => Future.value {
+            println("f7 -- " + Thread.currentThread().getName)//不定！
+        }
+        }
+        val f6 = f1.join(f4).flatMap({
+            case (a, b) => {
+                println("f6 -- " + Thread.currentThread().getName)//不定！
+                Future.Nil
+            }
+        })
+        Await.all(f1, f2, f3, f4, f5, f6)
+        println("end")
     }
     
     def test7: Unit = {
@@ -50,16 +75,22 @@ object FutureTest {
         val f2 = f1.flatMap(s => {
             println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
             futurePool.apply({
-                println("4 -- " + Thread.currentThread().getName)//4 -- pool-1-thread-2
+                println("3 -- " + Thread.currentThread().getName)//3 -- pool-1-thread-2
                 s.length
             })
         })
         val f3 = f1.flatMap(s => {
-            println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
+            println("4 -- " + Thread.currentThread().getName)//4 -- pool-1-thread-1
             Future.value({
-                println("3 -- " + Thread.currentThread().getName)//3 -- pool-1-thread-1
+                println("5 -- " + Thread.currentThread().getName)//5 -- pool-1-thread-1
             })
         })
+        f1.join(Future.Void).flatMap({case (a,b)=>{
+            println("6 -- " + Thread.currentThread().getName)//6 -- main
+            Future.value({
+                println("7 -- " + Thread.currentThread().getName)//7 -- main
+            })
+        }})
         
         Await.result(f2)
         Await.result(f3)
