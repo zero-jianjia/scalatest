@@ -1,7 +1,6 @@
 package org.zero.twitter_future
 
 import java.util.concurrent.{Executors, TimeUnit}
-
 import com.twitter.util.Future._
 import com.twitter.util._
 
@@ -16,13 +15,34 @@ object FutureTest {
         //        test4
         //        test5
         //        test6
-        test7
+//        test7
+        test8
     }
-
+    
+    def test8: Unit = {
+        val executors = Executors.newFixedThreadPool(3)
+        val futurePool: ExecutorServiceFuturePool = FuturePool.apply(executors)
+        
+        val f1 = futurePool.apply({
+            println("1 -- " + Thread.currentThread().getName)//1 -- pool-1-thread-1
+            "zero"
+        })
+        
+        val f2 = f1.flatMap(s => Future.value({
+            println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
+            "zero"
+        }))
+        
+        val f3 = Future.value({
+            println("3 -- " + Thread.currentThread().getName)//3 -- main
+            "zero"
+        })
+    }
+    
     def test7: Unit = {
         val executors = Executors.newFixedThreadPool(3)
         val futurePool: ExecutorServiceFuturePool = FuturePool.apply(executors)
-
+        
         val f1 = futurePool.apply({
             println("1 -- " + Thread.currentThread().getName)//1 -- pool-1-thread-1
             "zero"
@@ -40,19 +60,18 @@ object FutureTest {
                 println("3 -- " + Thread.currentThread().getName)//3 -- pool-1-thread-1
             })
         })
-
+        
         Await.result(f2)
         Await.result(f3)
     }
-
-
-
+    
     def test6: Unit = {
         //        fail("", "")
         //        println(111111)
-        println(Await.result(fail("", "").within(new JavaTimer(true, Option.apply("timer")), Duration.fromMilliseconds(1))))
+        println(Await.result(fail("", "").within(new JavaTimer(true, Option.apply("timer")), Duration
+            .fromMilliseconds(1))))
     }
-
+    
     def test5: Unit = {
         val f = getFuture3
         println("---await---")
@@ -63,7 +82,7 @@ object FutureTest {
         println(Await.all(getFuture2)) //等待future完成
         println("--------222")
     }
-
+    
     //抛出异常并被捕获
     def test4: Unit = {
         println("----------")
@@ -84,9 +103,8 @@ object FutureTest {
         println("await")
         println(Await.result(result))
         println("overoverover")
-
     }
-
+    
     def test3: Unit = {
         val future3 = Future.join(getFuture1, getFuture2)
         val f = future3 flatMap { e =>
@@ -94,7 +112,6 @@ object FutureTest {
         }
         println("await")
         println(Await.result(f))
-
         //运行结果。Future.join比for要好，真正的异步并发
         //        begin future1
         //        future1 --- UnboundedFuturePool-1
@@ -106,7 +123,7 @@ object FutureTest {
         //        combine zero + zero
         //        zero-zero
     }
-
+    
     def test2: Unit = {
         val result =
             for (
@@ -114,11 +131,10 @@ object FutureTest {
                 result2 <- getFuture2;
                 combineResult <- combine(result1, result2)
             ) yield combineResult
-
+        
         println("await")
         val v = Await.result(result)
         println(v)
-
         //        begin future1
         //        future1 --- UnboundedFuturePool-1
         //        await
@@ -129,15 +145,13 @@ object FutureTest {
         //        combine zero + zero
         //        zero-zero
     }
-
-
+    
     //组合两个future的结果为另一个future,test2也是同样
     def test1: Unit = {
         val future3 = for (f1 <- getFuture1; f2 <- getFuture2) yield (f1 + " " + f2)
         println("await")
         val result = Await.result(future3, DEFAULT_TIMEOUT)
         println(result)
-
         //运行结果,效果上看for中内容还是串行执行，但 future3 与 println("await") 是并行
         //        begin future1
         //        await
@@ -148,7 +162,7 @@ object FutureTest {
         //        future2 over.
         //        zero zero
     }
-
+    
     def combine(a: String, b: String): Future[String] = {
         FuturePool.unboundedPool {
             println(s"combine $a + $b")
@@ -156,7 +170,7 @@ object FutureTest {
             a + "-" + b
         }
     }
-
+    
     def fail(a: String, b: String): Future[String] = {
         FuturePool.unboundedPool {
             println("fail operation.")
@@ -165,8 +179,7 @@ object FutureTest {
             throw new Exception("Exception.")
         }
     }
-
-
+    
     def getFuture1: Future[String] = {
         FuturePool.unboundedPool {
             //使用的是UnboundedFuturePool（无界）
@@ -177,7 +190,7 @@ object FutureTest {
             "zero"
         }
     }
-
+    
     def getFuture2: Future[String] = {
         val executors = Executors.newFixedThreadPool(3)
         val futurePool: ExecutorServiceFuturePool = FuturePool.apply(executors)
@@ -190,7 +203,7 @@ object FutureTest {
             "zero"
         })
     }
-
+    
     def getFuture3: Future[String] = {
         FuturePool.unboundedPool {
             println("begin future3")
