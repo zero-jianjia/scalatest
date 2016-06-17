@@ -15,13 +15,41 @@ object FutureTest {
         //        test3
         //        test4
         //        test5
-        test6
+        //        test6
+        test7
+    }
+
+    def test7: Unit = {
+        val executors = Executors.newFixedThreadPool(3)
+        val futurePool: ExecutorServiceFuturePool = FuturePool.apply(executors)
+
+        val f1 = futurePool.apply({
+            println("1 -- " + Thread.currentThread().getName)//1 -- pool-1-thread-1
+            "zero"
+        })
+        val f2 = f1.flatMap(s => {
+            println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
+            futurePool.apply({
+                println("4 -- " + Thread.currentThread().getName)//4 -- pool-1-thread-2
+                s.length
+            })
+        })
+        val f3 = f1.flatMap(s => {
+            println("2 -- " + Thread.currentThread().getName)//2 -- pool-1-thread-1
+            Future.value({
+                println("3 -- " + Thread.currentThread().getName)//3 -- pool-1-thread-1
+            })
+        })
+
+        Await.result(f2)
+        Await.result(f3)
     }
 
 
+
     def test6: Unit = {
-//        fail("", "")
-//        println(111111)
+        //        fail("", "")
+        //        println(111111)
         println(Await.result(fail("", "").within(new JavaTimer(true, Option.apply("timer")), Duration.fromMilliseconds(1))))
     }
 
