@@ -16,7 +16,20 @@ object FutureTest {
         //        test5
         //        test6
 //        test7
-        test8
+//        test8
+        test9
+    }
+    
+    def test9: Unit = {
+        val f1 = Future({
+            println(Thread.currentThread().getName)
+            Thread.sleep(1000)
+        })
+        val f2 = Future({
+            println(Thread.currentThread().getName)
+            Thread.sleep(1000)
+        })
+        
     }
     
     def test8: Unit = {
@@ -55,7 +68,7 @@ object FutureTest {
         }
         }
         
-        val f7= Future.join(f1, f2).flatMap { case (a, b) => Future.value {
+        val f7 = Future.join(f1, f2).flatMap { case (a, b) => Future.value {
             TimeUnit.SECONDS.sleep(1)
             println("f7 -- " + Thread.currentThread().getName)//f7 -- main
         }
@@ -68,7 +81,6 @@ object FutureTest {
         })
         println("end")
         Await.all(f1, f2, f3, f4, f5, f6)
-       
         // 鉴于多种情况下的测试，发现这样的结论;
         // 当主线程执行 a.join(b)、Future.join(a, b) 时，如果a或b已经运行完成，那么由主线程运行flatMap中代码，否则由a或b中的线程执行flatMap中代码
         // 同样，对于 a.flatMap ,也是如此
@@ -95,12 +107,13 @@ object FutureTest {
                 println("5 -- " + Thread.currentThread().getName)//5 -- pool-1-thread-1
             })
         })
-        f1.join(Future.Void).flatMap({case (a,b)=>{
+        f1.join(Future.Void).flatMap({ case (a, b) => {
             println("6 -- " + Thread.currentThread().getName)//6 -- main
             Future.value({
                 println("7 -- " + Thread.currentThread().getName)//7 -- main
             })
-        }})
+        }
+        })
         
         Await.result(f2)
         Await.result(f3)

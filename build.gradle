@@ -25,6 +25,7 @@ dependencies {
 
     compile 'com.typesafe.akka:akka-actor_2.11:2.4.3'
 
+    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.7.4'
 
     compile 'com.twitter:finagle-core_2.11:6.31.0'
 	compile 'com.twitter:finagle-http_2.11:6.31.0'
