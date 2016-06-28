@@ -7,12 +7,24 @@ import scala.collection.immutable.Queue
   */
 object ListBuffer_Queue_StackTest {
     def main(args: Array[String]) {
+        testListBuffer
+    }
+
+    def testListBuffer: Unit = {
         import scala.collection.mutable.ListBuffer
         val listBuffer = new ListBuffer[Int]
         listBuffer += 1
         listBuffer += 2
+        listBuffer += 3
+        listBuffer += 4
         println(listBuffer)
 
+        val iterator = listBuffer.iterator.filter(_ > 2).toList
+        println(iterator)
+        println(listBuffer.filter(_ > 2))
+    }
+
+    def test: Unit = {
         import scala.collection.mutable.ArrayBuffer
         val arrayBuffer = new ArrayBuffer[Int]()
         arrayBuffer += 1
@@ -45,4 +57,6 @@ object ListBuffer_Queue_StackTest {
         println(stack.pop)
         println(stack)
     }
+
+
 }

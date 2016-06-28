@@ -16,6 +16,7 @@ object MysqlClient {
     private[this] val saxClient = Mysql.client
         .withCredentials(Conf.Sax.username, Conf.Sax.password)
         .withDatabase(Conf.Sax.dbname)
+
         .newRichClient("%s:%d".format(Conf.Sax.host, Conf.Sax.port))
 
     def selectRows(dbname: String, tablename: String, ids: Array[String]): Future[Seq[Map[String, String]]] = {

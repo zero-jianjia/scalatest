@@ -5,12 +5,13 @@ package com.zero.base
   */
 object Test {
     def main(args: Array[String]) {
-        def arrayMake[T](first: T, second: T) = {
-//            val r = new Array[T](2)
-//            r(0) = first
-//            r(1) = second
-//            r
+        class Stu(name: String) {
+            def this(){
+                this(null)
+            }
         }
 
+        val stu = new Stu()
+        println(stu)
     }
 }
