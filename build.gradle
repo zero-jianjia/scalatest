@@ -48,6 +48,8 @@ dependencies {
     compile 'org.scalacheck:scalacheck_2.11:1.13.0'
     compile 'org.scalatest:scalatest_2.11:3.0.0-M15'
 
+    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.7.2'
+
     testCompile 'org.mockito:mockito-core:2.0.43-beta'
 
 }
