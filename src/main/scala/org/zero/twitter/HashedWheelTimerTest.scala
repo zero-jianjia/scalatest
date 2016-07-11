@@ -33,14 +33,18 @@ object HashedWheelTimerTest {
         println(System.currentTimeMillis())
         //new ScheduledThreadPoolTimer().
         //HashedWheelTimer.apply(Duration.fromSeconds(1), 5)
-        val timer =  new ScheduledThreadPoolTimer()
+        val timer = new ScheduledThreadPoolTimer(4)
 
         timer.schedule(Time.fromSeconds(5), 5.seconds)({
-            println(System.currentTimeMillis() / 1000 + " a run")
+            println(Thread.currentThread().getName+System.currentTimeMillis() / 1000 + " a run")
             TimeUnit.SECONDS.sleep(3)
         })
         timer.schedule(Time.fromSeconds(2), 3.seconds)({
-            println(System.currentTimeMillis() / 1000 + " b run")
+            println(Thread.currentThread().getName+System.currentTimeMillis() / 1000 + " b run")
+            TimeUnit.SECONDS.sleep(2)
+        })
+        timer.schedule(Time.fromSeconds(2), 3.seconds)({
+            println(Thread.currentThread().getName+System.currentTimeMillis() / 1000 + " c run")
             TimeUnit.SECONDS.sleep(2)
         })
         Thread.sleep(1000000)
