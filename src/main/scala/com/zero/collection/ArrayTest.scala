@@ -10,6 +10,20 @@ object ArrayTest {
         test3()
     }
 
+    def test4(): Unit = {
+        val a = Array(1,2)
+        val b = Array(3,4)
+        val c = a ++ b
+
+        val e = List(1,2)
+        val d = scala.collection.mutable.LinkedList(3,4)
+        val f = e ++: d //右边操纵数的类型决定着返回结果的类型
+        println(f.getClass().getName())// f的类型是：scala.collection.mutable.LinkedList
+
+        val aa = List(1,2)
+        val cc = 0 +: aa // cc中的内容是 （0,1,2）, :+
+    }
+
     def test3(): Unit = {
         //数组转换Map
         val keys = Array("a", "b", "c", "d")

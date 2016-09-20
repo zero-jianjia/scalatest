@@ -52,6 +52,9 @@ dependencies {
 
     testCompile 'org.mockito:mockito-core:2.0.43-beta'
 
+    testCompile 'org.jmockit:jmockit:1.19'
+    testCompile 'junit:junit:4.11'
+
 }
 
 test {
