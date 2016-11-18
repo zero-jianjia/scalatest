@@ -6,6 +6,7 @@ package com.zero.collection
 object ListTest {
     def main(args: Array[String]) {
         val data = List(1, 2, 3)
+
         printList(data)
         println(data.isEmpty)
         println(data.head)

@@ -2,7 +2,7 @@ package org.zero.twitter_server
 
 import com.twitter.conversions.time._
 import com.twitter.finagle.http.{HttpMuxer, Request, Response, Status}
-import com.twitter.finagle.Service
+import com.twitter.finagle.{Http, Service}
 import com.twitter.io.Charsets
 import com.twitter.logging.Formatter
 import com.twitter.server.TwitterServer
@@ -45,6 +45,7 @@ object AdvancedServer extends TwitterServer {
         HttpMuxer.addHandler("/echo", service)
         HttpMuxer.addHandler("/echo/", service)
         // And wait on the server
+        val server = Http.server.serve(":8080", service)
         Await.ready(adminHttpServer)
     }
 }
