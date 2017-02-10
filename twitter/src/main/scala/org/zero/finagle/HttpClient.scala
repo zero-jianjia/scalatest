@@ -24,6 +24,10 @@ object HttpClient {
                 response.status match {
                     case Status.Ok => Future.value(response)
                     case Status.Forbidden => Future.exception(new InvalidRequest)
+                    case Status.SeeOther => {
+                        println("---aad--")
+                        Future.value(response)
+                    }
                     case _ => Future.exception(new Exception(response.status.reason))
                 }
             }
@@ -33,7 +37,7 @@ object HttpClient {
     def main(args: Array[String]) {
         val clientWithoutErrorHandling: Service[Request, Response] = ClientBuilder()
                 .codec(Http())
-                .hosts(new InetSocketAddress(8080))
+                .hosts("127.0.0.1:8080")
                 .hostConnectionLimit(1)
                 .build()
 
@@ -44,10 +48,10 @@ object HttpClient {
 
         println("))) Issuing two requests in parallel: ")
         val request1 = makeAuthorizedRequest(client)
-        val request2 = makeUnauthorizedRequest(client)
+//        val request2 = makeUnauthorizedRequest(client)
 
         // When both request1 and request2 have completed, close the TCP connection(s).
-        (request1 join request2) ensure {
+        /*(*/request1 /*join request2)*/ ensure {
             client.close()
         }
     }

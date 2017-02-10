@@ -5,13 +5,14 @@ package com.zero.base
   */
 object Test {
     def main(args: Array[String]) {
-        class Stu(name: String) {
-            def this(){
-                this(null)
-            }
-        }
-
-        val stu = new Stu()
-        println(stu)
+//        class Stu(name: String) {
+//            def this(){
+//                this(null)
+//            }
+//        }
+//
+//        val stu = new Stu()
+//        println(stu)
+        println("%-5.5s%s".format("aaaaa","b"))
     }
 }

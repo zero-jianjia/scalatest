@@ -1,32 +1,29 @@
 package org.zero
 
-import scala.runtime.NonLocalReturnControl
-import scala.util.control.ControlThrowable
 
 /**
   * Created by jianjia1 on 16/11/18.
   */
 object Test {
     def main(args: Array[String]) {
-        println(test)
-        println("111")
+        //        println(test)
+        //        println("111")
+
+        //        val list = List(1,2,3)
+        //        println(list.map(_+1))
+        //        val a = "aaa"
+        //        val b = new String("aaa")
+        //        println(a.eq(b))
+        //
+        //        println(a.eq(b.intern()))
+        
+    }
+
+    def test_=(v: String): Unit = {
+        println(v)
     }
 
     def test: Boolean = {
-        val list = List("A", "B", "C")
-        list.foreach(s => {
-            if (s == "D") {
-                println("ok, do something.")
-                return false
-            }
-        })
-
-        list.foreach(s => {
-            if (s == "C") {
-                println("ok, do something.")
-                return true
-            }
-        })
-        false
+        return false
     }
 }

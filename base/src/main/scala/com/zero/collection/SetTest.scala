@@ -32,4 +32,15 @@ object SetTest {
         var treeMap = TreeMap("Scala" -> "Spark", "Java" -> "Hadoop")
         println(treeMap)
     }
+
+    def a: Unit ={
+        val setA = Set(1,2,3,4)
+        val setB = Set(3,4,5)
+        val setC = setA &~ setB
+        println(setC.toList.mkString(","))
+
+//        val setC = setA ++ setB
+//        val setC = setA & setB
+//        println(setC.subsets(2).toList.mkString("\n"))
+    }
 }
