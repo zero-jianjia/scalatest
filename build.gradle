@@ -15,8 +15,10 @@ subprojects {
 
     repositories {
         mavenLocal()
-        maven { url 'http://10.13.3.72:8880/nexus/content/groups/public' }
         maven { url 'http://maven.oschina.net/content/groups/public/' }
+        maven { url 'http://uk.maven.org/maven2/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://repo.spring.io/libs-snapshot/' }
         mavenCentral()
     }
 
@@ -28,12 +30,6 @@ subprojects {
         compile 'com.typesafe.akka:akka-actor_2.11:2.4.3'
 
         compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.7.4'
-
-        compile 'com.twitter:finagle-core_2.11:6.31.0'
-        compile 'com.twitter:finagle-http_2.11:6.31.0'
-        compile 'com.twitter:finagle-mysql_2.11:6.31.0'
-        compile 'com.twitter:twitter-server_2.11:1.23.0'
-        compile group: 'com.twitter', name: 'finagle-stats_2.11', version: '6.39.0'
 
 
         compile 'com.google.protobuf:protobuf-java:2.6.1'

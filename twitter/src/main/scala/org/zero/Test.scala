@@ -7,7 +7,7 @@ package org.zero
 object Test {
     def main(args: Array[String]) {
         //        println(test)
-        //        println("111")
+                println("111")
 
         //        val list = List(1,2,3)
         //        println(list.map(_+1))

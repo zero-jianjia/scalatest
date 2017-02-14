@@ -1,0 +1,11 @@
+ext {
+    finagleVersion = '6.42.0'//注意: ' 与 "
+}
+
+dependencies {
+    //finagle
+    compile "com.twitter:finagle-core_2.11:${finagleVersion}"
+    compile "com.twitter:finagle-http_2.11:${finagleVersion}"
+    compile "com.twitter:finagle-mysql_2.11:${finagleVersion}"
+    compile "com.twitter:finagle-redis_2.11:${finagleVersion}"
+}
