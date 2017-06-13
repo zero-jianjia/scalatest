@@ -1,0 +1,2 @@
+rootProject.name = 'scalatest'
+include 'base','twitter','twitter_new'
